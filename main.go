@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"gofiber-web-template/cfg"
 	"gofiber-web-template/route"
 	"log"
@@ -48,6 +49,14 @@ func main() {
 	app.Use(requestid.New())
 	app.Use(logger.New(prepareLogger()))
 
+	// show error when route not found
+	app.Use(func(c *fiber.Ctx) error {
+		err := c.Status(fiber.StatusNotFound).SendFile(fmt.Sprintf("./views/error/%d.html", fiber.StatusNotFound))
+		if err != nil {
+			return c.Status(fiber.StatusNotFound).SendString("404 Not Found.")
+		}
+		return nil
+	})
 	route.Init(app)
 
 	// go func() {

@@ -49,6 +49,8 @@ func main() {
 	app.Use(requestid.New())
 	app.Use(logger.New(prepareLogger()))
 
+	route.Init(app)
+
 	// show error when route not found
 	app.Use(func(c *fiber.Ctx) error {
 		err := c.Status(fiber.StatusNotFound).SendFile(fmt.Sprintf("./views/error/%d.html", fiber.StatusNotFound))
@@ -57,7 +59,6 @@ func main() {
 		}
 		return nil
 	})
-	route.Init(app)
 
 	// go func() {
 	// 	queue.StartProcessConsumer()

@@ -13,4 +13,6 @@ require (
 	github.com/streadway/amqp v1.0.0
 	github.com/tebeka/strftime v0.1.5 // indirect
 	github.com/utahta/go-cronowriter v1.1.1
+	gorm.io/driver/mysql v1.0.2
+	gorm.io/gorm v1.20.2
 )

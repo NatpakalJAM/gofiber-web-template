@@ -1,4 +1,10 @@
 app-url: http://localhost/
+db:
+  host: localhost
+  port: 3306
+  database: db
+  username: root
+  password: root
 redis:
   host: localhost
   port: 6379

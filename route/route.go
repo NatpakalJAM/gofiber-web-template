@@ -8,5 +8,6 @@ import (
 
 // Init -> init route
 func Init(app *fiber.App) {
-	controller.RouteMain(app)
+	mainGroup := app.Group("/")
+	mainGroup.Get("/", controller.HelloWorld)
 }

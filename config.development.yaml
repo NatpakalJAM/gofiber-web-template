@@ -1,0 +1,13 @@
+app-url: http://localhost/
+redis:
+  host: localhost
+  port: 6379
+  db: 1
+  password:
+rabbitmq:
+  host: localhost
+  port: 5672
+  username: guest
+  password: guest
+  queues:
+    process: gofiber-web-template-process

@@ -27,9 +27,10 @@ func main() {
 	engine := html.New("./views", ".html")
 	prefork := false // fiber config Prefork | Default: false
 	if cfg.C.Environment != "development" {
+		prefork = true
+	} else {
 		engine.Reload(true)
 		engine.Debug(true)
-		prefork = true
 	}
 
 	app := fiber.New(fiber.Config{

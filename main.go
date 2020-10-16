@@ -35,8 +35,9 @@ func main() {
 	}
 
 	app := fiber.New(fiber.Config{
-		Prefork: prefork,
-		Views:   engine,
+		Prefork:      prefork,
+		Views:        engine,
+		ErrorHandler: errorHandler(),
 	})
 
 	app.Use("/assets", filesystem.New(filesystem.Config{
@@ -72,4 +73,18 @@ func prepareLogger() (config logger.Config) {
 	config.Format = "[${time}] ${status} - ${latency} ${method} ${path} query:[${query:}] header:[${header:}] body:[${body}]\n"
 	config.Output = outfile
 	return config
+}
+
+func errorHandler() func(*fiber.Ctx, error) error {
+	return func(ctx *fiber.Ctx, err error) error {
+		code := fiber.StatusInternalServerError
+		if e, ok := err.(*fiber.Error); ok {
+			code = e.Code
+		}
+		err = ctx.Status(code).SendFile("./views/error/error.html")
+		if err != nil {
+			return ctx.Status(500).SendString("Internal Server Error")
+		}
+		return nil
+	}
 }
